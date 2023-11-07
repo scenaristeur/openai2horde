@@ -36,6 +36,7 @@ export class HordeClient {
       //stop: [".", "[INST]"],
     };
     this.models = [
+      "koboldcpp/LLaMA2-13B-TiefighterLR"
       // aphrodite/Sao10K/Stheno-1.8-L2-13B // français cohérent et concis
       // "3080 | KoboldAI-GPTQ Exllama | x.com/justthirst1",  // llama
       // "KoboldAI/LLaMA2-13B-Holomax"                        //llama 2
@@ -130,7 +131,7 @@ export class HordeClient {
 
     stream.write(JSON.stringify(result)+"\r\n");
 
-    if(result.text.trim().length == 0){
+    if(result.text == undefined || result.text.trim().length == 0){
       console.log("Text length = 0, retry")
       result = await this.completions(params)
     }

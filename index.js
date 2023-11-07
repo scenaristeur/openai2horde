@@ -5,7 +5,7 @@ let horde_client_config = {
   HORDE_URL: process.env.HORDE_URL,
 }
 let horde_client = new HordeClient(horde_client_config);
-console.log(horde_client);
+//console.log(horde_client);
 
 import express, { json } from "express";
 
