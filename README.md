@@ -30,7 +30,13 @@ npm install
 # start openai2horde
 `npm run start`
 
+# run autogen two_agents.py
+`python two_agents.py`
+
+
 # dev
 run `npm run dev`
+
+#
 
 

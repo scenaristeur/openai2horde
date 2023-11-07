@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import * as fs from "fs"
+import pRetry from 'p-retry';
 
 var stream = fs.createWriteStream(".logs/horde_client_"+Date.now()+".log", {'flags': 'a'});
 stream.once('open', function(fd) {
@@ -57,6 +58,12 @@ export class HordeClient {
       cfg_scale: 7.5,
       denoising_strength: 0.6,
     };
+    this.headers = {
+      Accept: "application/json",
+      apikey: this.horde_api_key,
+      "Client-Agent": this.client_agent,
+      "Content-Type": "application/json",
+    };
     this.workers = [];
     console.log("HORDE CLIENT READY");
   }
@@ -71,12 +78,7 @@ export class HordeClient {
       models: this.models,
       workers: this.workers,
     };
-    const headers = {
-      Accept: "application/json",
-      apikey: this.horde_api_key,
-      "Client-Agent": this.client_agent,
-      "Content-Type": "application/json",
-    };
+
     //console.log('headers', headers)
     result.start = Date.now();
 
@@ -84,56 +86,59 @@ export class HordeClient {
       method: "post",
       url: this.horde_url + "generate/text/async",
       data: llm_request_message,
-      headers: headers,
+      headers: this.headers,
     });
     console.log(/*response, */ response.data);
 
-    
-    let check = await axios({
-      method: "get",
-      url: this.horde_url + "generate/text/status/" + response.data.id,
-      // data: message,
-      headers: headers,
-    });
+// Utilisation de la fonction fetchDataWithRetry avec des promesses
+this.fetchDataWithRetry(response.data)
+  .then((result) => {
+    console.log('Résultat réussi :', result);
+  })
+  .catch((error) => {
+    console.error('Toutes les tentatives ont échoué :', error.message);
+  });
 
-    let textPromise = new Promise((resolve, reject) => {
-      let timer = setInterval(async function () {
-        let check = await axios({
-          method: "get",
-          url: client.horde_url + "generate/text/status/" + response.data.id,
-          headers: headers,
-        });
+    // let check = await axios({
+    //   method: "get",
+    //   url: this.horde_url + "generate/text/status/" + response.data.id,
+    //   // data: message,
+    //   headers: headers,
+    // });
 
-        if (check.data.done == true) {
-          result.end = Date.now();
-          console.log("--GENERATION\n", check.data.generations[0], "\n--");
-          let text =
-            check.data.generations[0] && check.data.generations[0].text;
+    // let textPromise = new Promise((resolve, reject) => {
+    //   let timer = setInterval(async function () {
+    //     let check = await axios({
+    //       method: "get",
+    //       url: client.horde_url + "generate/text/status/" + response.data.id,
+    //       headers: headers,
+    //     });
 
-          console.log("----- text generated : ", text, "\n-----\n");
+    //     if (check.data.done == true) {
+    //       result.end = Date.now();
+    //       console.log("--GENERATION\n", check.data.generations[0], "\n--");
+    //       let text =
+    //         check.data.generations[0] && check.data.generations[0].text;
 
-          result.job = check.data.generations[0];
+    //       console.log("----- text generated : ", text, "\n-----\n");
 
-          clearInterval(timer); // Stop the timer
-          resolve(text); // Résoudre la promesse avec le texte
+    //       result.job = check.data.generations[0];
+
+    //       clearInterval(timer); // Stop the timer
+    //       resolve(text); // Résoudre la promesse avec le texte
 
           
-        } else {
-          console.log(check.data);
-        }
-      }, 1000);
-    });
+    //     } else {
+    //       console.log(check.data);
+    //     }
+    //   }, 1000);
+    // });
 
-    const text = await textPromise; // Attendre que la promesse soit résolue
-    result.text = text;
-    console.log("RETURN RESULT", result);
+    // const text = await textPromise; // Attendre que la promesse soit résolue
+    // result.text = text;
+    // console.log("RETURN RESULT", result);
 
-    stream.write(JSON.stringify(result)+"\r\n");
-
-    if(result.text.trim().length == 0){
-      console.log("Text length = 0, retry")
-      result = await this.completions(params)
-    }
+    // stream.write(JSON.stringify(result)+"\r\n");
 
 
 
@@ -141,20 +146,68 @@ export class HordeClient {
   }
 
 
-
-
-
-
-  async waitUntil(condition) {
-    return await new Promise((resolve) => {
-      const interval = setInterval(() => {
-        if (condition) {
-          resolve("foo");
-          clearInterval(interval);
+  async fetchDataWithRetry(data) {
+    let client = this
+    let maxRetries = 5;
+    const retryDelay = 1000; // Délai d'attente entre les tentatives en millisecondes
+  
+    return new Promise(async (resolve, reject) => {
+      const fetchData = async () => {
+        try {
+          const response = await axios({
+                  method: "get",
+                  url: client.horde_url + "generate/text/status/" + data.id,
+                  headers: client.headers,
+                });
+  
+          // Votre condition ici, par exemple : vérifier si la réponse contient un certain champ
+          if (response.data && response.data.someField === 'valeur attendue') {
+            resolve(response); // Résoudre la promesse avec la réponse réussie
+          } else {
+            throw new Error('La condition sur la réponse n\'est pas remplie.');
+          }
+        } catch (error) {
+          reject(error);
         }
-      }, 1000);
+      };
+  
+      const attemptWithRetry = async () => {
+        try {
+          const result = await pRetry(fetchData, {
+            retries: maxRetries,
+            onFailedAttempt: (error) => {
+              console.error(`Tentative ${error.attemptNumber} a échoué. Raison : ${error.message}`);
+            },
+          });
+  
+          resolve(result); // Résoudre la promesse avec le résultat réussi
+        } catch (error) {
+          if (maxRetries > 0) {
+            console.log('Nouvelle tentative dans 1 seconde...');
+            setTimeout(() => {
+              maxRetries--;
+              attemptWithRetry();
+            }, retryDelay);
+          } else {
+            reject(error);
+          }
+        }
+      };
+  
+      attemptWithRetry();
     });
   }
+
+  // async waitUntil(condition) {
+  //   return await new Promise((resolve) => {
+  //     const interval = setInterval(() => {
+  //       if (condition) {
+  //         resolve("foo");
+  //         clearInterval(interval);
+  //       }
+  //     }, 1000);
+  //   });
+  // }
 
   async getCompletion(story) {
     let client = this;

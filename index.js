@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5678;
 
 app.post("/v1/chat/completions", async (req, res) => {
   //console.log("req", req)
-  console.log(req.body);
+  //console.log(req.body);
 
   let response = await horde_client.completions(req.body);
 
