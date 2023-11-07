@@ -1,0 +1,8 @@
+[
+    {
+        "model": "horde",
+        "api_type": "open_ai",
+        "api_base": "http://localhost:5678/v1",
+        "api_key": "NULL"
+    }
+]

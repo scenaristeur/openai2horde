@@ -1,0 +1,1 @@
+curl -L https://finance.yahoo.com/quote/META?p=META&.tsrc=fin-srch | grep "Year-To-Date Change" | cut -d">" -f2 | cut -d"<" -f1
