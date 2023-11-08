@@ -40,7 +40,7 @@ export class HordeClient {
     this.models = [
       //"aphrodite/teknium/OpenHermes-2.5-Mistral-7B"
       //"koboldcpp/LLaMA2-13B-TiefighterLR",
-      // aphrodite/Sao10K/Stheno-1.8-L2-13B // français cohérent et concis
+      //"aphrodite/Sao10K/Stheno-1.8-L2-13B", // français cohérent et concis
       // "3080 | KoboldAI-GPTQ Exllama | x.com/justthirst1",  // llama
       // "KoboldAI/LLaMA2-13B-Holomax"                        //llama 2
       // "koboldcpp/MythoMax-L2-13b"
@@ -112,7 +112,7 @@ export class HordeClient {
           result.end = Date.now();
           console.log("--GENERATION\n", check.data.generations[0], "\n--");
           let text =
-            check.data.generations[0] && check.data.generations[0].text;
+            check.data.generations[0] && check.data.generations[0].text.trim();
 
           console.log("----- text generated : ", text, "\n-----\n");
 

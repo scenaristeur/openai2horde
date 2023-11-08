@@ -12,10 +12,12 @@ For more information, check the [FAQ](https://github.com/Haidra-Org/AI-Horde/blo
 
 # tests
 
-- [X] microsoft/autogen to Horde
+- [X] microsoft/autogen to Horde https://github.com/microsoft/autogen/discussions/596
+- [X] ChatDev to Horde https://github.com/OpenBMB/ChatDev
+- [X] Flowise see examples/flowise folder https://docs.flowiseai.com/
 - [ ] OpenAgents to Horde https://github.com/xlang-ai/OpenAgents & https://www.youtube.com/watch?v=htla3FzJTfg
 - [ ] AutoGPT to Horde https://github.com/Significant-Gravitas/AutoGPT WIP
-- [X] ChatDev to Horde https://github.com/OpenBMB/ChatDev
+
 - [ ] Deepseek coder to Horde  (does not use openai ?) https://www.youtube.com/watch?v=QPBmsgGufXE & https://deepseekcoder.github.io/ & https://github.com/deepseek-ai/deepseek-coder/
 - [ ] any other ideas ?
 
