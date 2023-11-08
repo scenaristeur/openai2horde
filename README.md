@@ -1,9 +1,9 @@
 # openai2horde
 
-- [ X ] microsoft/autogen to Horde
+- [X] microsoft/autogen to Horde
 - [ ] OpenAgents to Horde https://github.com/xlang-ai/OpenAgents & https://www.youtube.com/watch?v=htla3FzJTfg
 - [ ] AutoGPT to Horde https://github.com/Significant-Gravitas/AutoGPT WIP
-- [ ] ChatDev to Horde https://github.com/OpenBMB/ChatDev
+- [X] ChatDev to Horde https://github.com/OpenBMB/ChatDev
 - [ ] Deepseek coder to Horde  (does not use openai ?) https://www.youtube.com/watch?v=QPBmsgGufXE & https://deepseekcoder.github.io/ & https://github.com/deepseek-ai/deepseek-coder/
 
 
