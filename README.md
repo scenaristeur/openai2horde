@@ -1,5 +1,11 @@
 # openai2horde
 
+- [ X ] microsoft/autogen to Horde
+- [ ] OpenAgents to Horde https://github.com/xlang-ai/OpenAgents & https://www.youtube.com/watch?v=htla3FzJTfg
+- [ ] AutoGPT to Horde https://github.com/Significant-Gravitas/AutoGPT WIP
+- [ ] ChatDev to Horde https://github.com/OpenBMB/ChatDev
+- [ ] Deepseek coder to Horde  (does not use openai ?) https://www.youtube.com/watch?v=QPBmsgGufXE & https://deepseekcoder.github.io/ & https://github.com/deepseek-ai/deepseek-coder/
+
 ![Alt text](image-1.png)
 
 openai2horde allow you to use openai based tools like Microsoft Autogen, Auto-GPT and so many more in a decentralized way using Db0 Horde https://stablehorde.net/ & https://github.com/Haidra-Org/AI-Horde
@@ -32,6 +38,9 @@ npm install
 
 # run autogen two_agents.py
 `python two_agents.py`
+
+
+
 
 
 # dev
