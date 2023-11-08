@@ -79,14 +79,14 @@ interface_kwargs = {
     "show_function_outputs": DEBUG,
 }
 
-llm_config = {"config_list": config_list, "seed": 5, "use_cache": False}
-llm_config_memgpt = {"config_list": config_list_memgpt, "seed": 5, "use_cache": False}
+llm_config = {"config_list": config_list, "seed": 2}
+llm_config_memgpt = {"config_list": config_list_memgpt, "seed": 2}
 
 # The user agent
 user_proxy = autogen.UserProxyAgent(
     name="User_proxy",
     system_message="A human admin.",
-    code_execution_config={"last_n_messages": 2, "work_dir": "groupchat"},
+    code_execution_config={"last_n_messages": 2, "work_dir": "repo_improver"},
     human_input_mode="TERMINATE",  # needed?
     default_auto_reply="...",  # Set a default auto-reply message here (non-empty auto-reply is required for LM Studio)
 )
@@ -112,7 +112,7 @@ else:
     if not USE_AUTOGEN_WORKFLOW:
         coder = create_autogen_memgpt_agent(
             "MemGPT_coder",
-            persona_description="I am a 10x engineer, trained in Python. I was the first engineer at Uber "
+            persona_description="I am a 10x engineer, trained in JavaScript, Python and llms. I was the first engineer at Uber "
             "(which I make sure to tell everyone I work with).",
             user_description=f"You are participating in a group chat with a user ({user_proxy.name}) "
             f"and a product manager ({pm.name}).",
@@ -123,7 +123,7 @@ else:
         coder = create_memgpt_autogen_agent_from_config(
             "MemGPT_coder",
             llm_config=llm_config_memgpt,
-            system_message=f"I am a 10x engineer, trained in Python. I was the first engineer at Uber "
+            system_message=f"I am a 10x engineer, trained in Javascript, Python and llms. I was the first engineer at Uber "
             f"(which I make sure to tell everyone I work with).\n"
             f"You are participating in a group chat with a user ({user_proxy.name}) "
             f"and a product manager ({pm.name}).",
@@ -137,6 +137,6 @@ manager = autogen.GroupChatManager(groupchat=groupchat, llm_config=llm_config)
 # Begin the group chat with a message from the user
 user_proxy.initiate_chat(
     manager,
-    # message="Write a Function to print Numbers 1 to 10"
-    message="I want to design an app to make me one million dollars in one month. " "Yes, your heard that right.",
+   # message="I want to design an app to make me one million dollars in one month. " "Yes, your heard that right.",
+   message="I want to improve this repo https://github.com/scenaristeur/openai2horde"
 )

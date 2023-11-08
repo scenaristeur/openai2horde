@@ -31,10 +31,11 @@ config_list_memgpt = [
     },
 ]
 
-config_list_memgpt = autogen.config_list_from_json(env_or_file="OAI_CONFIG_LIST")
+config_list_memgpt = autogen.config_list_from_json(
+    env_or_file="OAI_CONFIG_LIST")
 
-openai.api_base="http://localhost:5678/v1"
-openai.api_key="NULL"
+openai.api_base = "http://localhost:5678/v1"
+openai.api_key = "NULL"
 
 
 # Uncomment and fill in the following for local LLM deployment:
@@ -79,8 +80,8 @@ interface_kwargs = {
     "show_function_outputs": DEBUG,
 }
 
-llm_config = {"config_list": config_list, "seed": 5, "use_cache": False}
-llm_config_memgpt = {"config_list": config_list_memgpt, "seed": 5, "use_cache": False}
+llm_config = {"config_list": config_list, "seed": 17}
+llm_config_memgpt = {"config_list": config_list_memgpt, "seed": 17}
 
 # The user agent
 user_proxy = autogen.UserProxyAgent(
@@ -88,7 +89,8 @@ user_proxy = autogen.UserProxyAgent(
     system_message="A human admin.",
     code_execution_config={"last_n_messages": 2, "work_dir": "groupchat"},
     human_input_mode="TERMINATE",  # needed?
-    default_auto_reply="...",  # Set a default auto-reply message here (non-empty auto-reply is required for LM Studio)
+    # Set a default auto-reply message here (non-empty auto-reply is required for LM Studio)
+    default_auto_reply="...",
 )
 
 # The agent playing the role of the product manager (PM)
@@ -96,7 +98,8 @@ pm = autogen.AssistantAgent(
     name="Product_manager",
     system_message="Creative in software product ideas.",
     llm_config=llm_config,
-    default_auto_reply="...",  # Set a default auto-reply message here (non-empty auto-reply is required for LM Studio)
+    # Set a default auto-reply message here (non-empty auto-reply is required for LM Studio)
+    default_auto_reply="...",
 )
 
 if not USE_MEMGPT:
@@ -131,12 +134,14 @@ else:
         )
 
 # Initialize the group chat between the user and two LLM agents (PM and coder)
-groupchat = autogen.GroupChat(agents=[user_proxy, pm, coder], messages=[], max_round=12)
+groupchat = autogen.GroupChat(
+    agents=[user_proxy, pm, coder], messages=[], max_round=12)
 manager = autogen.GroupChatManager(groupchat=groupchat, llm_config=llm_config)
 
 # Begin the group chat with a message from the user
 user_proxy.initiate_chat(
     manager,
+    message="""I want to create a funny snake game"""
     # message="Write a Function to print Numbers 1 to 10"
-    message="I want to design an app to make me one million dollars in one month. " "Yes, your heard that right.",
+    # message="I want to design an app to make me one million dollars in one month. " "Yes, your heard that right.",
 )

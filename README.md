@@ -37,6 +37,29 @@ npm install
 # dev
 run `npm run dev`
 
-#
+# todo
+- [ ] test multi-agents with postgres https://www.youtube.com/watch?v=JjVvYDPVrAQ&t=3s
+- [ ] see guidance https://github.com/guidance-ai/guidance
 
 
+# autogen examples
+- https://microsoft.github.io/autogen/docs/Examples/AgentChat
+
+# with autogpt
+.env : OPENAI_API_BASE_URL=http://localhost:5678/v1
+
+Auto-GPT-0.4.7$ ./run.sh -m json_file --speak
+
+All packages are installed.
+2023-11-07 14:54:45.995265: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Speak Mode:  ENABLED
+WARNING:  You do not have access to gpt-3.5-turbo. Setting fast_llm to gpt-3.5-turbo.
+WARNING:  You do not have access to gpt-4-0314. Setting smart_llm to gpt-3.5-turbo.
+NEWS:  Welcome to Auto-GPT!
+NEWS:  
+NEWS:  
+Welcome to Auto-GPT!  run with '--help' for more information.
+Create an AI-Assistant:  input '--manual' to enter manual mode.
+  Asking user via keyboard...
+I want Auto-GPT to:

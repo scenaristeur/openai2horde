@@ -15,9 +15,11 @@ app.use(json());
 
 const PORT = process.env.PORT || 5678;
 
+
+
 app.post("/v1/chat/completions", async (req, res) => {
   //console.log("req", req)
-  //console.log(req.body);
+  console.log(req.body);
 
   let response = await horde_client.completions(req.body);
 
@@ -27,6 +29,8 @@ app.post("/v1/chat/completions", async (req, res) => {
     object: "chat.completion",
     created: 1677652288,
     model: "gpt-3.5-turbo-0613",
+    command: [],
+    thoughts: [],
     choices: [
       {
         index: 0,
@@ -47,12 +51,47 @@ app.post("/v1/chat/completions", async (req, res) => {
   res.json(fake_response);
 });
 
+app.get("/v1/models", async (req, res) => {
+  console.log("req", req.body);
+  // let response = await horde_client.getModels(req.body);
+  // console.log(response)
+  let response = {
+    "object": "list",
+    "data": [
+      {
+        "id": "gpt-3.5-turbo",
+        "object": "model",
+        "created": 1686935002,
+        "owned_by": "organization-owner"
+      },
+      // {
+      //   "id": "gpt-4-0314",
+      //   "object": "model",
+      //   "created": 1686935002,
+      //   "owned_by": "organization-owner",
+      // },
+      // {
+      //   "id": "model-id-2",
+      //   "object": "model",
+      //   "created": 1686935002,
+      //   "owned_by": "openai"
+      // },
+    ],
+    "object": "list"
+  }
+  res.json(response);
+});
+
 app.post("/", async (req, res) => {
   console.log("req", req);
   res.json({ status: true, message: "Our node.js app works" });
 });
 
 app.get("/", async (req, res) => {
+  console.log("req", req);
+  res.json({ status: true, message: "Our node.js app works" });
+});
+app.get("*", async (req, res) => {
   console.log("req", req);
   res.json({ status: true, message: "Our node.js app works" });
 });
