@@ -6,6 +6,14 @@
 - [ ] ChatDev to Horde https://github.com/OpenBMB/ChatDev
 - [ ] Deepseek coder to Horde  (does not use openai ?) https://www.youtube.com/watch?v=QPBmsgGufXE & https://deepseekcoder.github.io/ & https://github.com/deepseek-ai/deepseek-coder/
 
+
+# autogen examples
+some tests are in root folder
+- https://microsoft.github.io/autogen/docs/Examples/AgentChat
+
+# with Chatdev
+`(venv) ~/dev/ChatDev$ OPENAI_API_BASE=http://127.0.0.1:5678/v1 OPENAI_API_KEY="dummy" python run.py --task "2048 game" --name "2048"`
+
 ![Alt text](image-1.png)
 
 openai2horde allow you to use openai based tools like Microsoft Autogen, Auto-GPT and so many more in a decentralized way using Db0 Horde https://stablehorde.net/ & https://github.com/Haidra-Org/AI-Horde
@@ -33,8 +41,13 @@ npm install
 
 ```
 
+# add your horde api key
+- renamme .env-example to .env
+and complete with your horde api key , see https://stablehorde.net/register and https://stablehorde.net/
+
 # start openai2horde
 `npm run start`
+--> openai2horde is accessed at http://localhost:5678/v1
 
 # run autogen two_agents.py
 `python two_agents.py`
@@ -51,8 +64,7 @@ run `npm run dev`
 - [ ] see guidance https://github.com/guidance-ai/guidance
 
 
-# autogen examples
-- https://microsoft.github.io/autogen/docs/Examples/AgentChat
+
 
 # with autogpt
 .env : OPENAI_API_BASE_URL=http://localhost:5678/v1
@@ -72,3 +84,6 @@ Welcome to Auto-GPT!  run with '--help' for more information.
 Create an AI-Assistant:  input '--manual' to enter manual mode.
   Asking user via keyboard...
 I want Auto-GPT to:
+
+
+

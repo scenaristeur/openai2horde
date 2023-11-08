@@ -39,7 +39,7 @@ export class HordeClient {
     };
     this.models = [
       //"aphrodite/teknium/OpenHermes-2.5-Mistral-7B"
-      "koboldcpp/LLaMA2-13B-TiefighterLR",
+      //"koboldcpp/LLaMA2-13B-TiefighterLR",
       // aphrodite/Sao10K/Stheno-1.8-L2-13B // français cohérent et concis
       // "3080 | KoboldAI-GPTQ Exllama | x.com/justthirst1",  // llama
       // "KoboldAI/LLaMA2-13B-Holomax"                        //llama 2
@@ -156,7 +156,7 @@ export class HordeClient {
         console.log(res.status);
       }
       // Don't forget to return something
-      console.log(res)
+      console.log(res);
       return res;
     } catch (err) {
       console.error(err);
