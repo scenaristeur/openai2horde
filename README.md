@@ -11,10 +11,13 @@
 some tests are in root folder
 - https://microsoft.github.io/autogen/docs/Examples/AgentChat
 
+![Alt text](image-1.png)
+
+
 # with Chatdev
 `(venv) ~/dev/ChatDev$ OPENAI_API_BASE=http://127.0.0.1:5678/v1 OPENAI_API_KEY="dummy" python run.py --task "2048 game" --name "2048"`
 
-![Alt text](image-1.png)
+![Alt text](image-2.png)
 
 openai2horde allow you to use openai based tools like Microsoft Autogen, Auto-GPT and so many more in a decentralized way using Db0 Horde https://stablehorde.net/ & https://github.com/Haidra-Org/AI-Horde
 
