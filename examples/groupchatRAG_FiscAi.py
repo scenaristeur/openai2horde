@@ -13,7 +13,7 @@ import chromadb
 
 llm_config = {
     "timeout": 60,
-    "seed": 42,
+    "seed": 12,
     "config_list": config_list,
     "temperature": 0,
     "use_cache": False
@@ -38,10 +38,10 @@ boss_aid = RetrieveUserProxyAgent(
     max_consecutive_auto_reply=3,
     retrieve_config={
         "task": "code",
-        "docs_path": "https://raw.githubusercontent.com/microsoft/FLAML/main/website/docs/Examples/Integrate%20-%20Spark.md",
+        "docs_path": "https://www.legifrance.gouv.fr/download/file/pdf/LEGITEXT000006069577.pdf/LEGI",
         "chunk_token_size": 1000,
         "model": config_list[0]["model"],
-        "client": chromadb.PersistentClient(path="./chromadb"),
+        "client": chromadb.PersistentClient(path="../chromadb/Fiscai"),
         "collection_name": "groupchat",
         "get_or_create": True,
     },
@@ -69,7 +69,8 @@ reviewer = autogen.AssistantAgent(
     llm_config=llm_config,
 )
 
-PROBLEM = "How to use spark for parallel training in FLAML? Give me sample code."
+#PROBLEM = "Comment sont imposés les revenus fonciers ?"
+PROBLEM = "Comment sont les taux d'imposition pour les traitements et salaires ?"
 
 def _reset_agents():
     boss.reset()

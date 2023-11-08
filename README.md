@@ -1,14 +1,17 @@
 # openai2horde
 
+- If you are like me with no GPU and no will to spend many, many €uros or $ to play with llms here is perharps a solution. 
+- If you have a GPU and want to earn kudos, helping other, consider becoming a Horde Worker
+
 openai2horde allow you to use openai based tools like Microsoft Autogen, Auto-GPT and so many more in a decentralized way using Db0 Horde https://stablehorde.net/ & https://github.com/Haidra-Org/AI-Horde
 
 The horde is a crowdsourced distributed cluster of Image generation workers and text generation workers. If you like this service, consider joining the horde yourself!
 
 For more information, check the [FAQ](https://github.com/Haidra-Org/AI-Horde/blob/main/FAQ.md). Finally you can also follow the main developer's blog
 
-- become a  horde worker https://github.com/Haidra-Org/AI-Horde-Worker#readme
+- become a Horde worker https://github.com/Haidra-Org/AI-Horde-Worker#readme
 
-- see horde text workers [Scribes](https://stablehorde.net/api/v2/workers?type=text)
+- see Horde text workers [Scribes](https://stablehorde.net/api/v2/workers?type=text)
 
 # tests
 
@@ -17,7 +20,13 @@ For more information, check the [FAQ](https://github.com/Haidra-Org/AI-Horde/blo
 - [X] Flowise see examples/flowise folder https://docs.flowiseai.com/
 - [ ] OpenAgents to Horde https://github.com/xlang-ai/OpenAgents & https://www.youtube.com/watch?v=htla3FzJTfg
 - [ ] AutoGPT to Horde https://github.com/Significant-Gravitas/AutoGPT WIP
-
+- [X] Autogen : https://github.com/Andyinater/AutoGen_EnhancedAgents 
+- [ ] Autogen : XAgent https://github.com/OpenBMB/XAgent https://www.youtube.com/watch?v=X6dna0O6pCw
+- [X] Autogen : Ai Scene writer https://github.com/abhilashi/ai-explorations/blob/main/ai_scene_writer.py
+- [X] Autogen : Agentcy https://github.com/amadad/agentcy
+- [ ] Langchain
+- [ ] Obsidian
+- [ ] Notion
 - [ ] Deepseek coder to Horde  (does not use openai ?) https://www.youtube.com/watch?v=QPBmsgGufXE & https://deepseekcoder.github.io/ & https://github.com/deepseek-ai/deepseek-coder/
 - [ ] any other ideas ?
 
@@ -64,6 +73,13 @@ and complete with your horde api key , see https://stablehorde.net/register and 
 
 
 
+# Agentcy
+```bash
+~/dev/openai2horde/examples/agentcy$ python main.py 
+Please enter the brand or company name: Chateau des Robots
+Please enter the your goal, brief, or problem statement: Le château des Robots est un tiers-lieu permettant aux familles et aux jeunes développeurs de se familiariser avec l'intelligence artificielle générative, la robotique, les modèles de language et le développement d'applications mobiles avec Vuejs. Le client est français et toute restitution ou livrable qui lui est adressée doit être en français
+```
+
 
 
 # dev
@@ -94,6 +110,9 @@ Welcome to Auto-GPT!  run with '--help' for more information.
 Create an AI-Assistant:  input '--manual' to enter manual mode.
   Asking user via keyboard...
 I want Auto-GPT to:
+
+
+
 
 
 

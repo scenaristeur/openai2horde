@@ -38,6 +38,7 @@ export class HordeClient {
       //stop: [".", "[INST]"],
     };
     this.models = [
+      "koboldcpp/LLaMA2-13B-TiefighterLR" // perspicace pour les revenus fonciers de examples/groupchatRAG_FiscAi.py
       //"aphrodite/teknium/OpenHermes-2.5-Mistral-7B"
       //"koboldcpp/LLaMA2-13B-TiefighterLR",
       //"aphrodite/Sao10K/Stheno-1.8-L2-13B", // français cohérent et concis
