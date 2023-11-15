@@ -31,10 +31,11 @@ config_list_memgpt = [
     },
 ]
 
-config_list_memgpt = autogen.config_list_from_json(env_or_file="OAI_CONFIG_LIST")
+config_list_memgpt = autogen.config_list_from_json(
+    env_or_file="OAI_CONFIG_LIST")
 
-openai.api_base="http://localhost:5678/v1"
-openai.api_key="NULL"
+openai.api_base = "http://localhost:5678/v1"
+openai.api_key = "NULL"
 
 
 # Uncomment and fill in the following for local LLM deployment:
@@ -79,16 +80,20 @@ interface_kwargs = {
     "show_function_outputs": DEBUG,
 }
 
-llm_config = {"config_list": config_list, "seed": 5, "use_cache": False}
-llm_config_memgpt = {"config_list": config_list_memgpt, "seed": 5, "use_cache": False}
+llm_config = {"config_list": config_list, "seed": 70, "use_cache": False}
+llm_config_memgpt = {"config_list": config_list_memgpt,
+                     "seed": 70, "use_cache": False}
 
 # The user agent
 user_proxy = autogen.UserProxyAgent(
     name="User_proxy",
-    system_message="A human admin.",
-    code_execution_config={"last_n_messages": 2, "work_dir": "groupchat"},
+    # system_message="A human admin.",
+    code_execution_config={"last_n_messages": 2,
+                           "work_dir": "flask", "use_docker": "python:3"},
     human_input_mode="TERMINATE",  # needed?
-    default_auto_reply="...",  # Set a default auto-reply message here (non-empty auto-reply is required for LM Studio)
+    system_message=""""Reply TERMINATE if the task has been solved at full satisfaction.
+Otherwise, reply CONTINUE, or the reason why the task is not solved yet."""
+    # default_auto_reply="...",  # Set a default auto-reply message here (non-empty auto-reply is required for LM Studio)
 )
 
 # The agent playing the role of the product manager (PM)
@@ -96,7 +101,8 @@ pm = autogen.AssistantAgent(
     name="Product_manager",
     system_message="Creative in software product ideas.",
     llm_config=llm_config,
-    default_auto_reply="...",  # Set a default auto-reply message here (non-empty auto-reply is required for LM Studio)
+    # Set a default auto-reply message here (non-empty auto-reply is required for LM Studio)
+    default_auto_reply="...",
 )
 
 if not USE_MEMGPT:
@@ -123,7 +129,8 @@ else:
         coder = create_memgpt_autogen_agent_from_config(
             "MemGPT_coder",
             llm_config=llm_config_memgpt,
-            system_message=f"I am a 10x engineer, trained in Python. I was the first engineer at Uber "
+            system_message=f"If you want the user to save the code in a file before executing it, put # filename: <filename> inside the code block as the first line."
+            f"I am a 10x engineer, trained in Python. I was the first engineer at Uber "
             f"(which I make sure to tell everyone I work with).\n"
             f"You are participating in a group chat with a user ({user_proxy.name}) "
             f"and a product manager ({pm.name}).",
@@ -131,12 +138,15 @@ else:
         )
 
 # Initialize the group chat between the user and two LLM agents (PM and coder)
-groupchat = autogen.GroupChat(agents=[user_proxy, pm, coder], messages=[], max_round=12)
+groupchat = autogen.GroupChat(
+    agents=[user_proxy, pm, coder], messages=[], max_round=12)
 manager = autogen.GroupChatManager(groupchat=groupchat, llm_config=llm_config)
 
 # Begin the group chat with a message from the user
 user_proxy.initiate_chat(
     manager,
     # message="Write a Function to print Numbers 1 to 10"
-    message="I want to design an app to make me one million dollars in one month. " "Yes, your heard that right.",
+    # message="I want to design an app to make me one million dollars in one month. " "Yes, your heard that right.",
+    message="""Create a french streamlit app for customer survey about what the think about Museomix a hackathon taking place  in november at The Royal monaster of Brou in Boug en Bresse. Save the code to disk"""
+
 )

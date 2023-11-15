@@ -16,7 +16,7 @@ config_list_gpt4 = autogen.config_list_from_json(
 )
 
 gpt4_config = {
-    "seed": 40,  # change the seed for different trials
+    "seed": 38,  # change the seed for different trials
     "temperature": 0,
     "config_list": config_list_gpt4,
     "request_timeout": 120,
@@ -68,7 +68,8 @@ manager = autogen.GroupChatManager(groupchat=groupchat, llm_config=gpt4_config)
 
 user_proxy.initiate_chat(
     manager,
-    message="""find papers on AUTOGEN and MemGPT and build an exemple combining both technos.""",
+    message="""Create a flask app for customer survey"""
+    #message="""find papers on AUTOGEN and MemGPT and build an exemple combining both technos.""",
     #     message="""
     # find papers on LLM applications from arxiv in the last week, create a markdown table of different domains.
     # """,

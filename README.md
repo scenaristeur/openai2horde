@@ -112,6 +112,9 @@ Create an AI-Assistant:  input '--manual' to enter manual mode.
 I want Auto-GPT to:
 
 
+# Autogen code execution
+https://github.com/microsoft/autogen/blob/5dfbbbdf73f54f0a244bdcd9113755c557c19cc1/website/docs/FAQ.md#why-is-code-not-saved-as-file
+
 
 
 

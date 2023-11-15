@@ -25,7 +25,7 @@ export class HordeClient {
       max_context_length: 2048,
       max_length: 200,
       rep_pen: 1.1,
-      temperature: 0.7,
+      temperature: 0, //0.7,
       top_p: 0.92,
       top_k: 0,
       top_a: 0,
