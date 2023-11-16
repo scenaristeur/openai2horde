@@ -1,14 +1,22 @@
 [
     {
-        "model": "horde",
+        "model": "gpt-4",
         "api_type": "open_ai",
         "api_base": "http://localhost:5678/v1",
         "api_key": "NULL"
     },
     {
-        "model": "gpt-4",
+        "model": "horde",
+        "api_type": "open_ai",
+        "api_base": "http://localhost:5678/v1",
+        "api_key": "NULL"
+    },
+
+    {
+        "model": "aphrodite/codellama/CodeLlama-34b-Instruct-hf",
         "api_type": "open_ai",
         "api_base": "http://localhost:5678/v1",
         "api_key": "NULL"
     }
+  
 ]
