@@ -23,7 +23,7 @@ export class HordeClient {
     this.params = {
       n: 1,
       max_context_length: 2048,
-      max_length: 200,
+      max_length: 512,
       rep_pen: 1.1,
       temperature: 0, //0.7,
       top_p: 0.92,
@@ -38,7 +38,11 @@ export class HordeClient {
       //stop: [".", "[INST]"],
     };
     this.models = [
-      "koboldcpp/LLaMA2-13B-TiefighterLR" // perspicace pour les revenus fonciers de examples/groupchatRAG_FiscAi.py
+      //"koboldcpp/OpenHermes-2.5-Mistral-7b",
+      //"aphrodite/elinas/chronos007-70b" # PAS MAL pour holacratie
+      //"koboldcpp/LLaMA2-13B-TiefighterLR",
+      //"aphrodite/codellama/CodeLlama-34b-Instruct-hf"
+      // perspicace pour les revenus fonciers de examples/groupchatRAG_FiscAi.py
       //"aphrodite/teknium/OpenHermes-2.5-Mistral-7B"
       //"koboldcpp/LLaMA2-13B-TiefighterLR",
       //"aphrodite/Sao10K/Stheno-1.8-L2-13B", // français cohérent et concis
@@ -133,7 +137,13 @@ export class HordeClient {
 
     stream.write(JSON.stringify(result) + "\r\n");
 
-    if (result.text == undefined || result.text.trim().length == 0) {
+    if (
+      result.text == undefined ||
+      result.text.trim().length == 0 ||
+      result.text.trim() == "}]" ||
+      result.text.trim() == "]" ||
+      result.text.trim() == "}"
+    ) {
       console.log("Text length = 0, retry");
       result = await this.completions(params);
     }

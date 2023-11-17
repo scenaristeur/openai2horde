@@ -41,6 +41,9 @@ some tests are in root folder
 # with Chatdev
 `(venv) ~/dev/ChatDev$ OPENAI_API_BASE=http://127.0.0.1:5678/v1 OPENAI_API_KEY="dummy" python run.py --task "2048 game" --name "2048"`
 
+`OPENAI_API_BASE=http://127.0.0.1:5678/v1 OPENAI_API_KEY="dummy" python run.py --task "a fiscal advisor Microsoft/autogen app that retrieve information from a chromadb populated with the the 'general tax code' available at this url https://www.legifrance.gouv.fr/download/file/pdf/LEGITEXT000006069577.pdf/LEGI " --name "fiscai"`
+
+
 ![Alt text](image-2.png)
 
 

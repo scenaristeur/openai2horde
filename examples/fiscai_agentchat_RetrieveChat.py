@@ -58,10 +58,11 @@ ragproxyagent = RetrieveUserProxyAgent(
     max_consecutive_auto_reply=10,
     retrieve_config={
         "task": "code",
-        "docs_path": "https://raw.githubusercontent.com/holacracyone/Holacracy-Constitution-4.1-FRENCH/master/Constitution-Holacracy.md", #"~/code/FLAML/website/docs/reference",  # change this to your own path, such as https://raw.githubusercontent.com/microsoft/autogen/main/README.md
+        #"doc_path": "https://www.impots.gouv.fr/www2/fichiers/documentation/brochure/ir_2023/pdf_integral/Brochure-IR-2023.pdf",
+        "docs_path": "https://www.legifrance.gouv.fr/download/file/pdf/LEGITEXT000006069577.pdf/LEGI",
         "chunk_token_size": 2000,
         "model": config_list[0]["model"],
-        "client": chromadb.PersistentClient(path="../chromadb/retrieveChat"),
+        "client": chromadb.PersistentClient(path="../chromadb/fiscai_cgi"),
         "embedding_model": "all-mpnet-base-v2",
         "get_or_create": True,  # set to False if you don't want to reuse an existing collection, but you'll need to remove the collection manually
     },
@@ -77,7 +78,7 @@ assistant.reset()
 #code_problem = "How can I use FLAML to perform a classification task and use spark to do parallel training. Train 30 seconds and force cancel jobs if time limit is reached."
 #code_problem = "Je souhaite créer une application Streamlit qui me permette de gérer tous les aspects de l'holacratie."
 #problem = "Tu dois aider un groupe de personnes à mettre en place l'Holacratie au sein de leur organisation. le contexte du projet est décrit sur la page https://scenaristeur.github.io/cdr/ Définit les prochaines actions."
-problem = "Quelle organisation (cercle, roles...) proposes-tu pour un projet de site web ? Etablit les domaines, les prochaines actions, et anticipe les tensions"
+problem = "Comment sont imposés les revenus fonciers?"
 
 ragproxyagent.initiate_chat(assistant, problem=problem, 
                             #search_string="spark"
