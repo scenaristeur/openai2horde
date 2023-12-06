@@ -13,6 +13,8 @@ For more information, check the [FAQ](https://github.com/Haidra-Org/AI-Horde/blo
 
 - see Horde text workers [Scribes](https://stablehorde.net/api/v2/workers?type=text)
 
+- models from the horde : choose Generic, not Novel Adventure https://github.com/koboldai/koboldai-client
+
 # tests
 
 - [X] microsoft/autogen to Horde https://github.com/microsoft/autogen/discussions/596

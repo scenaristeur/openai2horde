@@ -25,6 +25,7 @@ from autogen.retrieve_utils import TEXT_FORMATS
 print("Accepted file formats for `docs_path`:")
 print(TEXT_FORMATS)
 
+
 from autogen.agentchat.contrib.retrieve_assistant_agent import RetrieveAssistantAgent
 from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
 import chromadb
@@ -35,7 +36,7 @@ assistant = RetrieveAssistantAgent(
     system_message="You are a helpful assistant.",
     llm_config={
         "timeout": 600,
-        "cache_seed": 42,
+        "cache_seed": 427,
         "config_list": config_list,
     },
 )

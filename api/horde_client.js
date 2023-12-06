@@ -36,8 +36,31 @@ export class HordeClient {
       sampler_order: [6, 0, 1, 3, 4, 2, 5],
       use_default_badwordsids: false,
       //stop: [".", "[INST]"],
+      
     };
     this.models = [
+      //'aphrodite/Sao10K/Euryale-1.3-L2-70B',
+      //"aphrodite/Sao10K/Stheno-1.8-L2-13B"
+      // "koboldcpp/mistrp-airoboros-7b",
+      // "koboldcpp/mistrp-airoboros-7b",
+      // "Norquinal/Mistral-7B-claude-chat",
+      // "koboldcpp/mistral-pygmalion-7b.Q5_K_M",
+      // "koboldcpp/openhermes-2.5-mistral-7b.Q6_K.gguf"
+      // DOChttps://stablehorde.net/
+      // choose from https://github.com/koboldai/koboldai-client
+      // hosted on https://stablehorde.net/api/v2/workers?type=text
+      //       "facebook/opt-2.7b",
+      //       "facebook/opt-13b", //https://huggingface.co/facebook/opt-13b
+      //       "KoboldAI/fairseq-dense-2.7B", // https://huggingface.co/KoboldAI/fairseq-dense-2.7B
+      // "TheBloke/MythoMax-L2-13B-GPTQ", // https://huggingface.co/TheBloke/MythoMax-L2-13B-GPTQ
+      // "jondurbin/airoboros-13b", //https://huggingface.co/jondurbin/airoboros-13b
+      // "EleutherAI/gpt-neox-20b", // https://huggingface.co/EleutherAI/gpt-neox-20b
+      // "KoboldAI/fairseq-dense-13B", // https://huggingface.co/KoboldAI/fairseq-dense-13B
+      // "EleutherAI/gpt-j-6b", //"https://huggingface.co/EleutherAI/gpt-j-6b"
+      // "KoboldAI/LLaMA2-13B-Tiefighter",
+      // "Undi95/Emerhyst-13B",
+      // "elinas/chronos-13b",
+      // "EleutherAI/gpt-neo-2.7B"
       //"koboldcpp/OpenHermes-2.5-Mistral-7b",
       //"aphrodite/elinas/chronos007-70b" # PAS MAL pour holacratie
       //"koboldcpp/LLaMA2-13B-TiefighterLR",
@@ -76,6 +99,37 @@ export class HordeClient {
     console.log("HORDE CLIENT READY");
   }
 
+  async completions2(params) {
+    let response = {
+      choices: [
+        {
+          finish_reason: "stop",
+          index: 0,
+          message: {
+            content:
+              "The 2020 World Series was played in Texas at Globe Life Field in Arlington.",
+            role: "assistant",
+          },
+        },
+      ],
+      created: 1677664795,
+      id: "chatcmpl-7QyqpwdfhqwajicIEznoc6Q47XAyW",
+      model: "gpt-3.5-turbo-0613",
+      object: "chat.completion",
+      usage: {
+        completion_tokens: 17,
+        prompt_tokens: 57,
+        total_tokens: 74,
+      },
+    };
+
+
+
+
+    
+    return response;
+  }
+
   async completions(params) {
     let client = this;
     let result = { job: {} };
@@ -83,75 +137,80 @@ export class HordeClient {
     let llm_request_message = {
       prompt: prompt,
       params: this.params,
-      models: this.models,
+      models: /*params.models || */ this.models,
       workers: this.workers,
     };
 
+    console.log("###############REQUEST PARAMS", llm_request_message);
     //console.log('headers', headers)
     result.start = Date.now();
+    try {
+      let response = await axios({
+        method: "post",
+        url: this.horde_url + "generate/text/async",
+        data: llm_request_message,
+        headers: this.headers,
+      });
+      console.log(/*response, */ response.data);
 
-    let response = await axios({
-      method: "post",
-      url: this.horde_url + "generate/text/async",
-      data: llm_request_message,
-      headers: this.headers,
-    });
-    console.log(/*response, */ response.data);
+      // let check = await axios({
+      //   method: "get",
+      //   url: this.horde_url + "generate/text/status/" + response.data.id,
+      //   // data: message,
+      //   headers: this.headers,
+      // });
 
-    // let check = await axios({
-    //   method: "get",
-    //   url: this.horde_url + "generate/text/status/" + response.data.id,
-    //   // data: message,
-    //   headers: this.headers,
-    // });
+      let textPromise = new Promise((resolve, reject) => {
+        let timer = setInterval(async function () {
+          let check = await axios({
+            method: "get",
+            url: client.horde_url + "generate/text/status/" + response.data.id,
+            headers: client.headers,
+          });
 
-    let textPromise = new Promise((resolve, reject) => {
-      let timer = setInterval(async function () {
-        let check = await axios({
-          method: "get",
-          url: client.horde_url + "generate/text/status/" + response.data.id,
-          headers: client.headers,
-        });
+          if (check.data.done == true) {
+            result.end = Date.now();
+            console.log("--GENERATION\n", check.data.generations[0], "\n--");
+            let text =
+              check.data.generations[0] &&
+              check.data.generations[0].text.trim();
 
-        if (check.data.done == true) {
-          result.end = Date.now();
-          console.log("--GENERATION\n", check.data.generations[0], "\n--");
-          let text =
-            check.data.generations[0] && check.data.generations[0].text.trim();
+            console.log("----- text generated : ", text, "\n-----\n");
 
-          console.log("----- text generated : ", text, "\n-----\n");
+            result.job = check.data.generations[0];
 
-          result.job = check.data.generations[0];
+            clearInterval(timer); // Stop the timer
+            resolve(text); // Résoudre la promesse avec le texte
+          } else {
+            console.log(check.data);
+          }
+        }, 1000);
+      });
 
-          clearInterval(timer); // Stop the timer
-          resolve(text); // Résoudre la promesse avec le texte
-        } else {
-          console.log(check.data);
-        }
-      }, 1000);
-    });
+      const text = await textPromise; // Attendre que la promesse soit résolue
+      result.text = text;
+      console.log("RETURN RESULT", result);
 
-    const text = await textPromise; // Attendre que la promesse soit résolue
-    result.text = text;
-    console.log("RETURN RESULT", result);
+      stream.write(JSON.stringify(result) + "\r\n");
 
-    stream.write(JSON.stringify(result) + "\r\n");
+      if (
+        result.text == undefined ||
+        result.text.trim().length == 0 ||
+        result.text.trim() == "}]" ||
+        result.text.trim() == "]" ||
+        result.text.trim() == "}"
+      ) {
+        console.log("Text length = 0, retry");
+        result = await this.completions(params);
+      }
 
-    if (
-      result.text == undefined ||
-      result.text.trim().length == 0 ||
-      result.text.trim() == "}]" ||
-      result.text.trim() == "]" ||
-      result.text.trim() == "}"
-    ) {
-      console.log("Text length = 0, retry");
-      result = await this.completions(params);
+      return result;
+    } catch (e) {
+      console.log("ERREUR", e);
     }
-
-    return result;
   }
 
-  async getModels(options) {
+  async getModels(options = {}) {
     console.log(options);
     //https://stablehorde.net/api/v2/workers?type=text
 
@@ -167,12 +226,49 @@ export class HordeClient {
         console.log(res.status);
       }
       // Don't forget to return something
-      console.log(res);
-      return res;
+      // console.log(res.data);
+      return res.data.filter((model) => model.performance > 0);
     } catch (err) {
       console.error(err);
     }
-    console.log(res);
+    //console.log(res);
+    return res;
+  }
+
+  async getScribes(options = {}) {
+    console.log(options);
+    //https://stablehorde.net/api/v2/workers?type=text
+
+    try {
+      let res = await axios({
+        method: "get",
+        url: this.horde_url + "workers?type=text",
+        // data: message,
+        headers: this.headers,
+      });
+      if (res.status == 200) {
+        // test for status you want, etc
+        console.log(res.status);
+      }
+      // Don't forget to return something
+      // console.log(res.data);
+      // hack beacaus eperf is text and not number
+      // ex:     performance: '8.5 tokens per second',
+
+      let scribes = res.data.map((s) => {
+        var temp = Object.assign({}, s);
+        temp.performance = parseFloat(s.performance.split(" ")[0]);
+        return temp;
+      });
+
+      // sort by perf
+      scribes = scribes.sort((a, b) => b.performance - a.performance);
+
+      return scribes.filter((scribe) => scribe.online == true);
+    } catch (err) {
+      console.error(err);
+    }
+    //console.log(res);
     return res;
   }
 
