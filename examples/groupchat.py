@@ -6,7 +6,11 @@ import autogen
 config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
 
 
-llm_config = {"config_list": config_list, "seed": 42, "use_cache": False}
+llm_config = {
+    "config_list": config_list,
+      "seed": 42, 
+     # "use_cache": False
+      }
 user_proxy = autogen.UserProxyAgent(
    name="User_proxy",
    system_message="A human admin.",
