@@ -133,7 +133,7 @@ export class HordeClient {
   async completions(params) {
     let client = this;
     let result = { job: {} };
-    let prompt = JSON.stringify(params.messages);
+    let prompt = params.test_single_prompt == true ? params.prompt  : JSON.stringify(params.messages) // lorsque l'on envoie juste un prompt, la réponse est au bon format . params.prompt 
     let llm_request_message = {
       prompt: prompt,
       params: this.params,

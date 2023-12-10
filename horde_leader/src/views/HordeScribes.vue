@@ -1,6 +1,6 @@
 <template>
     <div>
-        connected : {{ connected }}, {{ scribes.length }} scribes
+        connected : {{ connected }}, {{ actifs.length }} / {{ scribes.length }} scribes
         <div> <a href="https://aqualxx.github.io/stable-ui/workers" taget="blank">More on models</a></div>
 
         <v-data-table :items="scribes" :headers="headers" v-model="selected" item-value="models[0]" show-select>
@@ -9,7 +9,8 @@
             </template>
 
         </v-data-table>
-        selected : {{ selected }}
+        selected : {{ selected }}<br>
+        actifs: {{  actifs }}
 
         <v-list lines="one">
             <v-list-item v-for="scribe in scribes" :key="scribe.name" :title="scribe.name"
@@ -51,6 +52,11 @@ export default {
         selected() {
             console.log(this.selected)
             socket.emit('selected', this.selected)
+        },
+        actifs() {
+            console.log(this.actifs)
+            socket.emit('actifs', this.actifs)
+            JSON.stringify(this.selected) != JSON.stringify(this.actifs) ? this.selected = this.actifs : ""
         }
     },
     computed: {

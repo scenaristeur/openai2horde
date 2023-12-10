@@ -130,3 +130,48 @@ npm create vue@latest
 ```
 - https://socket.io/fr/how-to/use-with-vue
 - https://vuetifyjs.com/en/components/data-tables/basics/#selection
+
+
+# Todo
+- should replace model selection by worker.id selection
+
+
+prompt 
+[
+  {
+    role: 'system',
+    content: `Tu es un assistant intelligent, qui représente un "LIVREDONT VOUS ETES LE HEROS3, un livre co-écrit avec l'utilisateur, tu racontes une histoire cohérente, fantastique.`
+  },
+  {
+    role: 'user',
+    content: "Je pouvais entendre le bruit des pas d'Adrienne avant de la voir. Il y avait une certaine cadence dans la façon dont Adrienne marchait qui la distinguait de la plupart des femmes ; l'inclinaison spécifique de son orteil, le bruissement de sa jupe, le balancement de ses hanches, un mélange de confiance sans hâte et d'invitation subtile. Cela me faisait reprendre mon souffle à chaque fois que je l'entendais. À certains égards, mais pas beaucoup, elle me faisait penser à une panthère exotique. Un chat agile de la jungle. Il était impossible de ne pas lever les yeux lorsque je sentais sa présence proche.\n" +
+      "J'ai rencontré son visage, trouvant ses yeux perçants qui, dans le passé, avaient fait détourner la plupart des hommes d'elle. Son visage s'étendait sur les hautes arches de ses pommettes qui auraient pu tenir entre les mains d'un maître d'œuvre. Ses joues rougissaient comme celles d'une écolière et ses lèvres avaient le baiser de porcelaine vierge d'une jeune religieuse. Elle passa ses doigts dans mes cheveux, tirant doucement sur les mèches. Son contact était léger mais ferme et cela me fit frissonner le dos. \n" +
+      '"Vous me demandez un rendez-vous et vous ne vous brossez même pas les cheveux ?" Dit-elle. \n' +
+      `"Pas même un bonjour ?" Je réponds en arrangeant mes cheveux, "Et je l'ai fait. Ça ressemble à ça."\n` +
+      "Elle a haussé les sourcils et m'a jeté un regard de côté tout en repoussant un quelques cheveux épars qui tombaient sur son front. Faisant une pause, Adrienne détourna son regard de moi avant que ses yeux ne se tournent nerveusement vers sa tenue alors qu'elle ajustait sa chemise et sa veste. Une fois de plus, sa gêne inhabituelle avait trahi son désintérêt.\n" +
+      `"Je sais ce que tu ressens. Avant, j'étais pareil," remarquai-je. \n` +
+      `"Hein ?" Adrienne m'a regardé, ajustant rapidement une mèche de ses cheveux. "Qu'est-ce que tu veux dire ?"\n` +
+      `"Je m'inquiète de mon apparence devant les gens que je voulais impressionner."\n` +
+      'Adrienne croisa les bras. "Je vais à un rendez-vous seulement pour te faire taire," souffla-t-elle. Ses joues roses racontaient une autre histoire.\n' +
+      `"Je pense que j'ai gagné un peu de respect ici", la taquinai-je.\n` +
+      `"Tu ne vas pas m'en dissuader", a déclaré Adrienne. , "Nous avons un rendez-vous alors tu me laisses tranquille."\n` +
+      `J'ai ri. "Et alors ? On va au café ?"\n` +
+      '"Ouais, on pourrait aussi bien," concéda-t-elle.\n' +
+      "Adrienne m'a attrapé le bras et m'a tiré hors du bord de la route, me réprimandant pour debout près du trottoir au cas où une voiture passerait à côté de nous. Ses douces réprimandes m'ont rappelé une grande sœur. Nous avons marché sur le trottoir, Adrienne en tête, bavardant pendant que je la suivais. Elle tenait la tête haute, le dos droit et les bras balancés le long du corps avec assurance et détermination. Chacune de ses actions témoignait de sa fierté, mais en même temps, elle était timide. Adrienne était une contradiction ambulante. \n" +
+      '"Tu es de bonne humeur," je souris.\n' +
+      `Adrienne me lança un regard en coin. "Je ne le suis pas", dit-elle en se ponctuant d'une moue.\n` +
+      `Le café était un petit endroit pittoresque avec une atmosphère chaleureuse. Malgré cela, il y avait une longue file d’attente à la porte. J'ai vérifié ma montre et j'ai vu qu'il était à peine plus de midi. C'était étrange qu'ils soient si occupés si tôt dans la journée. Adrienne hésita, regardant autour d'elle avant de se rapprocher timidement de moi. "Qu'est-ce qui ne va pas ?" J'ai demandé.\n` +
+      `"Peut-être qu'on devrait revenir plus tard quand il y aura moins de monde", a dit Adrienne.",`
+  }
+]
+
+reponse 
+{
+  index: 0,
+  message: {
+    role: 'assistant',
+    content: '"Patience, on y arrivera tôt ou tard."\n' +
+      "Elle a soupiré mais a finalement accepté. Nous nous sommes mis à attendre dans la file d'attente, je derrière elle, mes mains dans les poches, mon regard errant sur ses cheveux bruns lissés qui frôlaient sa nuque, sur son dos droit et ses hanches en mouvement, sur ses épaules larges et bien dessinées. Elle sentait bon, une odeur de vanille et de fleurs sauvages. J'ai essayé de me concentrer sur notre conversation pour ne pas penser à tout ça."
+  },
+  finish_reason: 'stop'
+}
