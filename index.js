@@ -57,6 +57,9 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
+  socket.on('selected', (selected) => {
+    console.log('selected', selected);
+  });
 });
 
 app.post("/v1/chat/completions2", async (req, res) => {

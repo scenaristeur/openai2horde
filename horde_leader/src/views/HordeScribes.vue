@@ -3,22 +3,13 @@
         connected : {{ connected }}, {{ scribes.length }} scribes
         <div> <a href="https://aqualxx.github.io/stable-ui/workers" taget="blank">More on models</a></div>
 
-        <v-data-table 
-        :items="scribes" 
-        :headers="headers" 
-        v-model="selected"
-        item-value="name"
-        show-select
-        >
-        <template v-slot:selected="{ item }">
-            <v-checkbox
-              v-model="item.exclusive"
-              readonly
-            ></v-checkbox>
-          </template>
-    
-    </v-data-table>
-selected : {{ selected }}
+        <v-data-table :items="scribes" :headers="headers" v-model="selected" item-value="models[0]" show-select>
+            <template v-slot:selected="{ item }">
+                <v-checkbox v-model="item.exclusive" readonly></v-checkbox>
+            </template>
+
+        </v-data-table>
+        selected : {{ selected }}
 
         <v-list lines="one">
             <v-list-item v-for="scribe in scribes" :key="scribe.name" :title="scribe.name"
@@ -31,7 +22,7 @@ selected : {{ selected }}
 </template>
 
 <script>
-import { state } from "@/socket";
+import { socket, state } from "@/socket";
 export default {
     name: "HordeScribes",
     data() {
@@ -45,13 +36,21 @@ export default {
                 //     key: 'name',
                 //   },
                 { title: 'Name', key: 'name' },
-                { title: 'models', key: 'models', 
-                value: item => `${item.models[0]}` },
+                {
+                    title: 'models', key: 'models',
+                    value: item => `${item.models[0]}`
+                },
                 { title: 'online', key: 'online' },
                 { title: 'performance', key: 'performance' },
                 { title: 'max_context_length', key: 'max_context_length' },
                 { title: 'max_length', key: 'max_length' },
             ],
+        }
+    },
+    watch: {
+        selected() {
+            console.log(this.selected)
+            socket.emit('selected', this.selected)
         }
     },
     computed: {
@@ -60,6 +59,9 @@ export default {
         },
         connected() {
             return state.connected;
+        },
+        actifs() {
+            return state.actifs;
         }
     }
 
@@ -67,7 +69,8 @@ export default {
 </script>
 
 <style>
-.v-selection-control__input input{
+.v-selection-control__input input {
     opacity: 0.5 !important;
 
-}</style>
+}
+</style>
