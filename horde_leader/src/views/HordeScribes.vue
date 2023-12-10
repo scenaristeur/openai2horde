@@ -1,24 +1,60 @@
 <template>
     <div>
-        connected : {{  connected }}
-        {{  scribes }}
+        connected : {{ connected }}, {{ scribes.length }} scribes
+        <div> <a href="https://aqualxx.github.io/stable-ui/workers" taget="blank">More on models</a></div>
+
+        <v-data-table 
+        :items="scribes" 
+        :headers="headers" 
+        v-model="selected"
+        item-value="name"
+        show-select
+        >
+        <template v-slot:selected="{ item }">
+            <v-checkbox
+              v-model="item.exclusive"
+              readonly
+            ></v-checkbox>
+          </template>
+    
+    </v-data-table>
+selected : {{ selected }}
+
         <v-list lines="one">
-            <v-list-item
-              v-for="n in 3"
-              :key="n"
-              :title="'Item ' + n"
-              subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit"
-              prepend-avatar="https://randomuser.me/api/portraits/women/8.jpg"
-            ></v-list-item>
-          </v-list>
+            <v-list-item v-for="scribe in scribes" :key="scribe.name" :title="scribe.name"
+                subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit"
+                prepend-avatar="https://randomuser.me/api/portraits/women/8.jpg">
+                {{ scribe }}
+            </v-list-item>
+        </v-list>
     </div>
 </template>
 
 <script>
 import { state } from "@/socket";
-    export default {
-        name: "HordeScribes",
-        computed: {
+export default {
+    name: "HordeScribes",
+    data() {
+        return {
+            selected: [],
+            headers: [
+                //   {
+                //     title: 'Dessert (100g serving)',
+                //     align: 'start',
+                //     sortable: false,
+                //     key: 'name',
+                //   },
+                { title: 'Name', key: 'name' },
+                { title: 'models', key: 'models', 
+                value: item => `${item.models[0]}` },
+                { title: 'online', key: 'online' },
+                { title: 'performance', key: 'performance' },
+                { title: 'max_context_length', key: 'max_context_length' },
+                { title: 'max_length', key: 'max_length' },
+            ],
+        }
+    },
+    computed: {
         scribes() {
             return state.scribes;
         },
@@ -27,9 +63,11 @@ import { state } from "@/socket";
         }
     }
 
-    }
+}
 </script>
 
-<style scoped>
+<style>
+.v-selection-control__input input{
+    opacity: 0.5 !important;
 
-</style>
+}</style>

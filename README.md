@@ -129,3 +129,4 @@ https://github.com/microsoft/autogen/blob/5dfbbbdf73f54f0a244bdcd9113755c557c19c
 npm create vue@latest
 ```
 - https://socket.io/fr/how-to/use-with-vue
+- https://vuetifyjs.com/en/components/data-tables/basics/#selection
