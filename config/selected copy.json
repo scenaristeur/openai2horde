@@ -1,0 +1,10 @@
+{
+  "selected": [
+    "koboldcpp/debug-openbuddy-coder-34b-v11-bf16.Q5_K_M",
+    "koboldcpp/Noromaid-20b-v0.1.1.q8_0",
+    "aphrodite/jebcarter/psyonic-cetacean-20B",
+    "aphrodite/NeverSleep/Noromaid-20b-v0.1.1",
+    "koboldcpp/debug-llama-2-7b-langchain-chat-q8_0",
+    "koboldcpp/mistrp-airoboros-7b"
+  ]
+}

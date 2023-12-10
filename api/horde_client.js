@@ -25,7 +25,7 @@ export class HordeClient {
       max_context_length: 2048,
       max_length: 512,
       rep_pen: 1.1,
-      temperature: 0, //0.7,
+      temperature: 0.7, //0.7,
       top_p: 0.92,
       top_k: 0,
       top_a: 0,
@@ -139,6 +139,8 @@ export class HordeClient {
       params: this.params,
       models: /*params.models || */ this.models,
       workers: this.workers,
+      seed: 45,
+      nfsw: true
     };
 
     console.log("###############REQUEST PARAMS", llm_request_message);
@@ -184,7 +186,7 @@ export class HordeClient {
           } else {
             console.log(check.data);
           }
-        }, 1000);
+        }, 3000);
       });
 
       const text = await textPromise; // Attendre que la promesse soit résolue
