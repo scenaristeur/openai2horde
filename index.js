@@ -16,7 +16,12 @@ import { Server } from "socket.io";
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: ["http://localhost:5173", "http://127.0.0.1:5173"]
+    //origin: ['http://localhost:*', 'http://anotherdomain.com:*'],
+  }
+});
 let models = await horde_client.getModels()
 let scribes = await horde_client.getScribes();
 const nb_models = 7 // nombre de models à utiliser 
@@ -28,6 +33,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+  socket.emit('scribes',scribes)
   socket.on('chat message', (msg) => {
     console.log('message: ' + msg);
     io.emit('chat message', msg);

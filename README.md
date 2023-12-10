@@ -124,3 +124,8 @@ https://github.com/microsoft/autogen/blob/5dfbbbdf73f54f0a244bdcd9113755c557c19c
 
 
 
+# front 
+```
+npm create vue@latest
+```
+- https://socket.io/fr/how-to/use-with-vue

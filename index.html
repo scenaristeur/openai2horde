@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Socket.IO chat</title>
+    <title>Horde models chat</title>
     <style>
       body {
         margin: 0;
@@ -54,14 +54,32 @@
       #messages > li:nth-child(odd) {
         background: #efefef;
       }
+
+      #scribes {
+        height: 50vh;
+        background-color: aqua;
+        overflow-y: auto;
+      }
     </style>
   </head>
   <body>
+    <div id="scribes">
+      <div>
+        <span id="scribes_actifs_count"></span> scribes actifs sur
+        <span id="scribes_count"></span>
+      </div>
+    </div>
     <ul id="messages"></ul>
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button>Send</button>
     </form>
     <script src="/socket.io/socket.io.js"></script>
+    <script>
+      function populate_scribes(scribes) {
+        console.log(scribes.length);
+        document.getElementById("scribes_count").innerHTML = scribes.length;
+      }
+    </script>
     <script>
       const socket = io();
       //socket.emit("models", { filter: "llms" });
@@ -85,10 +103,10 @@
       });
       socket.on("scribes", (scribes) => {
         console.log(scribes);
+        console.log(scribes);
+        populate_scribes(scribes);
       });
-      socket.on("models", (models) => {
-        console.log(models);
-      });
+      socket.on("models", (models) => {});
     </script>
   </body>
 </html>
